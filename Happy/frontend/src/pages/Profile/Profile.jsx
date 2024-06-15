@@ -1,8 +1,13 @@
 import React from 'react'
+import Header from '../../component/Header/Header'
+import Table from '../../component/Table/Table'
 
-const Profile = () => {
+const Profile = ({isHistory}) => {
   return (
-    <div>Profile</div>
+    <>
+      <Header isProfile={true}/>
+      <Table isHistory={isHistory}/>
+    </>
   )
 }
 

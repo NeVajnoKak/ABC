@@ -463,3 +463,92 @@ input::-webkit-inner-spin-button {
     margin-right: 5px;
     margin-left: 5px;
 }
+
+.offcanvas, .offcanvas-lg, .offcanvas-md, .offcanvas-sm, .offcanvas-xl, .offcanvas-xxl {
+    --bs-offcanvas-width: 300px;
+}
+
+.offcanvas-btn{
+    height: 50px;
+    color: rgba(135, 144, 157, 1);
+    text-decoration: none;
+}
+
+.offcanvas-btn-admin{
+    font-size: 15px;
+    height: 20px;
+    color: rgba(135, 144, 157, 1);
+    text-decoration: none;
+}
+.offcanvas-active-admin {
+    background-color: none;
+}
+.offcanvas-active {
+    background-color: rgba(246, 246, 246, 1);
+}
+.offcanvas-active-btn {
+    color: transparent;
+    background: var(--gold-color);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.table thead tr td ,
+.table tbody tr td 
+{
+    height: 52px;
+}
+.table thead tr{
+    background-color: rgba(248, 245, 238, 1);
+    color: rgba(102, 102, 102, 1);
+    font-size: 16px;
+}
+.table tbody tr{
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(21, 21, 21, 1);
+    font-size: 15px;
+}
+.table>:not(caption)>*>* {
+    background-color: transparent;
+    color: inherit;
+}
+.table>tbody,
+.table>thead
+{
+    vertical-align: middle;
+}
+
+offcanvas.hiding, .offcanvas.show, .offcanvas.showing {
+    visibility: visible;
+}
+.offcanvas {
+    visibility: visible;
+}
+
+.cart-summary-title {
+    color: transparent;
+    background: var(--gold-color);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+/* .cart-item-btn {
+    color: transparent;
+    background: var(--gold-color);
+    -webkit-background-clip: text;
+    background-clip: text;
+} */
+
+.offcanvas.offcanvas-start {
+    transform: none;
+    width: 280px;
+}
+.offcanvas-logout{
+    border: none;
+    background-color: #fff;
+    color: rgba(135, 144, 157, 1);
+}
+.under-border {
+    height: 40px;
+    border-bottom: 1px solid rgba(218, 218, 218, 1);
+    margin-right: 15px;
+}
