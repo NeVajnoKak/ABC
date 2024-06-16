@@ -33,9 +33,10 @@ const Form = ({ authForm }) => {
       localStorage.setItem('authToken', data.token);
       // console.log('username : ' , data.username)
       localStorage.setItem('username', data.username)
+      localStorage.setItem('usertype', data.usertype)
       localStorage.setItem('isAuthenticated', true);
       navigate('/')
-      // console.log('Login successful:', data);
+      window.location.reload(); 
       
     } catch (error) {
       setError(error.message);
@@ -62,6 +63,7 @@ const Form = ({ authForm }) => {
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('isAuthenticated', true);
       navigate('/')
+      window.location.reload();
     } catch (error) {
       setError(error.message);
       console.error('Registration error:', error);

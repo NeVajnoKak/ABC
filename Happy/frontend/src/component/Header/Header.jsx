@@ -12,35 +12,37 @@ import './Header.module.css'
 import ProfileSlidebar from '../Slidebar/Profile/ProfileSlidebar'
 import OffCanvas from '../OffCanvas/OffCanvas'
 
-const Header = ({ isProfile }) => {
+const Header = ({ isAdmin, isProfile }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
-    const [username, setUsername] = useState(localStorage.getItem('username'));
-    const [token, setToken] = useState(localStorage.getItem('authToken'));
-    const navigate = useNavigate();
+  const [username, setUsername] = useState(localStorage.getItem('username'));
+  const [token, setToken] = useState(localStorage.getItem('authToken'));
+  const [usertype, setUsertype] = useState(localStorage.getItem('usertype'));
+  
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        localStorage.setItem('isAuthenticated', isAuthenticated);
-        localStorage.setItem('username', username);
-        localStorage.setItem('authToken', token);
-        // console.log(username)
-    }, [isAuthenticated, username, token]);
+  useEffect(() => {
+    localStorage.setItem('isAuthenticated', isAuthenticated);
+    localStorage.setItem('username', username);
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('usertype', usertype); 
+  }, [isAuthenticated, username, token, usertype]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('username');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('usertype')
+
+    setIsAuthenticated(false);
+    setUsername(null);
+    setToken(null);
+    setUsertype(null);
+
+    navigate('/login');
+    window.location.reload();
+  };
 
 
-    const handleLogout = () => {
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('username');
-        localStorage.removeItem('authToken');
-
-        setIsAuthenticated(false);
-        setUsername(null);
-        setToken(null);
-
-        navigate('/login');
-    };
-
-    const openOffCanvas = () => {
-        document.querySelector('a[href="#offcanvasProfile"]').click();
-    };
     return (
         <>
 
@@ -50,7 +52,7 @@ const Header = ({ isProfile }) => {
                         <Link to="/" className="navbar-brand me-auto" href="#"><img src={logo} alt="" width="193.59px" height="29px" /> </Link>
                         :
                         <>
-                        <Link onClick={openOffCanvas} className="navbar-brand me-auto" href="#"><img src={profileLogo} alt="" /> </Link>
+                            <Link className="navbar-brand me-auto" href="#"><img src={profileLogo} alt="" /> </Link>
                         </>
                     }
                     <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -60,15 +62,15 @@ const Header = ({ isProfile }) => {
                         </div>
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-center flex-grow-1">
-                            <li className="nav-item">
+                                <li className="nav-item">
 
-                                {isProfile == false ? 
-                                <Link to="/" className="nav-link mx-lg-2 active text-uppercase" aria-current="page" href="#">Главная</Link>
-                            :
-                                <Link to="/" className="nav-link mx-lg-2 text-uppercase" aria-current="page" href="#">Главная</Link>
-                            }
-                            </li>
-                                
+                                    {isProfile == false ?
+                                        <Link to="/" className="nav-link mx-lg-2 active text-uppercase" aria-current="page" href="#">Главная</Link>
+                                        :
+                                        <Link to="/" className="nav-link mx-lg-2 text-uppercase" aria-current="page" href="#">Главная</Link>
+                                    }
+                                </li>
+
                                 <li className="nav-item">
                                     <Link className="nav-link mx-lg-2 text-uppercase" href="#">Цветы</Link>
                                 </li>
@@ -94,8 +96,13 @@ const Header = ({ isProfile }) => {
                             <button class="btn sort-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {username}
                             </button>
+
                             <ul class="dropdown-menu">
-                                <li><Link to={"/profile/order"} class="dropdown-item" href="#">Настройки</Link></li>
+                                {isAdmin ?
+                                    <li><Link to={"/admin/clietns"} class="dropdown-item" href="#">CRM проверка</Link></li>
+                                    :
+                                    <li><Link to={"/profile/order"} class="dropdown-item" href="#">Настройки</Link></li>
+                                }
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><button onClick={handleLogout} class="dropdown-item" href="#">Logout</button></li>
                             </ul>
@@ -113,11 +120,15 @@ const Header = ({ isProfile }) => {
                     )}
                     {isProfile == false ?
                         <>
-                            <Link to={'/cart'} className="cart-container ms-2 me-3">
-                                <img src={cart} alt="Cart" className="cart-icon" />
-                                <span className="cart-count">12</span>
-                            </Link>
-                            <span className="me-3">|</span>
+                            {isAuthenticated ?
+                                <><Link to={'/cart'} className="cart-container ms-2 me-3">
+                                    <img src={cart} alt="Cart" className="cart-icon" />
+                                    <span className="cart-count">12</span>
+                                </Link>
+                                    <span className="me-3">|</span></>
+                                :
+                                <></>
+                            }
                         </>
                         :
                         <>
@@ -151,9 +162,9 @@ const Header = ({ isProfile }) => {
             </nav>
             {
                 isProfile === false ?
-                <></>
-                :
-                <OffCanvas triggerId="offcanvasProfile"></OffCanvas>
+                    <></>
+                    :
+                    <OffCanvas triggerId="offcanvasProfile"></OffCanvas>
             }
         </>
     )
